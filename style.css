@@ -60,9 +60,9 @@ a {
 }
 
 .logo {
-    font-size: 1.75rem;
-    font-weight: 800;
-    letter-spacing: -0.04em;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
     color: var(--text-primary);
 }
 
@@ -72,15 +72,16 @@ a {
 
 .main-nav ul {
     display: flex;
-    gap: 2rem;
+    gap: 2.5rem;
     list-style: none;
     align-items: center;
 }
 
 .nav-link {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--text-secondary);
     font-weight: 500;
+    letter-spacing: -0.01em;
 }
 
 .nav-link:hover,

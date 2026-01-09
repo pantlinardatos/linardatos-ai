@@ -1,11 +1,17 @@
 :root {
     --bg-color: #0f172a;
     --bg-secondary: #1e293b;
-    --text-primary: #f8fafc;
+    --text-primary: #f1f5f9;
     --text-secondary: #94a3b8;
     --accent-color: #38bdf8;
-    --accent-glow: rgba(56, 189, 248, 0.4);
-    --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    /* Sky blue for primary actions/highlights */
+    --accent-dim: #0ea5e9;
+    /* Slightly darker for hover/active */
+    --accent-glow: rgba(56, 189, 248, 0.15);
+    --border-color: rgba(255, 255, 255, 0.08);
+    /* Subtle border for separation */
+
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 * {
@@ -18,103 +24,148 @@ body {
     font-family: var(--font-main);
     background-color: var(--bg-color);
     color: var(--text-primary);
-    line-height: 1.6;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1000px;
+    /* Reduced max-width for better reading experience */
     margin: 0 auto;
     padding: 0 2rem;
 }
 
-/* Header */
+/* Header & Nav */
 .site-header {
-    padding: 2rem 0;
-    position: absolute;
-    width: 100%;
+    padding: 1.5rem 0;
+    position: sticky;
     top: 0;
-    left: 0;
-    z-index: 10;
+    background-color: rgba(15, 23, 42, 0.9);
+    /* Glass effect */
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.02em;
     color: var(--text-primary);
 }
 
-.highlight {
+.logo .highlight {
+    color: var(--accent-color);
+}
+
+.main-nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-link {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.nav-link:hover,
+.nav-link.active {
     color: var(--accent-color);
 }
 
 /* Hero Section */
 .hero-section {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
+    padding: 8rem 0 6rem;
     position: relative;
-    overflow: hidden;
-    padding-top: 4rem; /* offset for header */
+    border-bottom: 1px solid var(--border-color);
 }
 
-.hero-background-effect {
-    position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 60vw;
-    height: 60vw;
-    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-    filter: blur(80px);
-    z-index: -1;
-    opacity: 0.6;
+.hero-content {
+    max-width: 800px;
 }
 
 h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
     line-height: 1.1;
     font-weight: 800;
     margin-bottom: 1.5rem;
     letter-spacing: -0.03em;
 }
 
-.gradient-text {
-    background: linear-gradient(135deg, #fff 0%, var(--accent-color) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
+.text-accent {
+    color: var(--accent-color);
 }
 
 .hero-subtitle {
     font-size: 1.25rem;
     color: var(--text-secondary);
     max-width: 600px;
-    font-weight: 300;
+    font-weight: 400;
+    margin-bottom: 2rem;
 }
 
-/* About Section */
-.about-section {
-    padding: 6rem 0;
-    background-color: var(--bg-color);
-    border-top: 1px solid rgba(255,255,255,0.05);
+/* Sections */
+.section {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.about-content {
-    max-width: 800px;
+.section-title {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
-h2 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
+.content-block {
+    margin-bottom: 3rem;
+}
+
+.content-block h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
     font-weight: 600;
 }
 
-.about-content p {
-    font-size: 1.1rem;
+.content-block p {
     color: var(--text-secondary);
     margin-bottom: 1rem;
+    font-size: 1.05rem;
+}
+
+/* Grid for Services/Features */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+/* About Page Specifics */
+.bio-header {
+    margin-bottom: 3rem;
+}
+
+.bio-meta {
+    font-family: monospace;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
 }
 
 /* Footer & Legal */
@@ -122,66 +173,62 @@ h2 {
     background-color: var(--bg-secondary);
     padding: 4rem 0 2rem;
     font-size: 0.9rem;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: auto;
 }
 
 .footer-grid {
     display: grid;
-    grid-template-columns: 1fr 1.5fr 1.5fr;
-    gap: 3rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
     margin-bottom: 3rem;
 }
 
-.footer-info h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-}
-
-.footer-legal h4, .footer-legal-secondary h4 {
-    font-size: 0.85rem;
+.footer-legal h4 {
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
     color: var(--text-secondary);
     margin-bottom: 1rem;
-    font-weight: 600;
+    opacity: 0.7;
 }
 
-.footer-legal ul, .footer-legal-secondary ul {
+.legal-list {
     list-style: none;
 }
 
-.footer-legal li, .footer-legal-secondary li {
+.legal-list li {
     margin-bottom: 0.5rem;
     color: var(--text-secondary);
+    font-size: 0.85rem;
 }
 
-.footer-legal strong, .footer-legal-secondary strong {
+.legal-list strong {
     color: var(--text-primary);
     font-weight: 500;
-    margin-right: 0.3rem;
 }
 
 .copyright {
     text-align: center;
     color: var(--text-secondary);
     padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid var(--border-color);
     font-size: 0.8rem;
+    opacity: 0.6;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
     }
 
+    .grid-2,
     .footer-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-    
-    .hero-background-effect {
-        opacity: 0.4;
+
+    .main-nav ul {
+        gap: 1.5rem;
     }
 }

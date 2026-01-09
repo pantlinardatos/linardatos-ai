@@ -74,6 +74,7 @@ a {
     display: flex;
     gap: 2rem;
     list-style: none;
+    align-items: center;
 }
 
 .nav-link {
@@ -84,6 +85,20 @@ a {
 
 .nav-link:hover,
 .nav-link.active {
+    color: var(--accent-color);
+}
+
+.lang-switch {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.lang-switch:hover {
+    border-color: var(--accent-color);
     color: var(--accent-color);
 }
 

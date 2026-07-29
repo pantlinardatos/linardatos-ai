@@ -403,25 +403,49 @@ h1 {
 .content-block p:last-child { margin-bottom: 0; }
 .content-block strong { color: var(--ink); font-weight: 500; }
 
-/* Indexed cards (01 / 02 / 03) */
-.indexed {
+/* Numbered principles — full-width rows separated by hairlines.
+   Three narrow cards gave a 25-character measure; rows let the copy
+   run at a readable width and absorb uneven paragraph lengths. */
+.principles { list-style: none; counter-reset: principle; }
+.principles > li {
+  counter-increment: principle;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  overflow: hidden;
+  grid-template-columns: 3.5rem 1fr;
+  column-gap: 24px;
+  padding: 30px 0;
+  border-top: 1px solid var(--border);
 }
-.indexed .item { background: var(--paper); padding: 28px 26px 32px; display: flex; flex-direction: column; gap: 10px; }
-.indexed .num {
+.principles > li:first-child { border-top: 0; padding-top: 4px; }
+.principles > li:last-child { padding-bottom: 4px; }
+.principles > li::before {
+  content: counter(principle, decimal-leading-zero);
+  grid-column: 1;
+  grid-row: 1;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--ink-subtle);
   letter-spacing: 0.08em;
+  padding-top: 0.45em;
 }
-.indexed h3 { font-size: 1.125rem; font-weight: 500; color: var(--ink); letter-spacing: -0.02em; }
-.indexed p { font-size: 0.9375rem; color: var(--ink-soft); line-height: 1.6; }
+/* h3 and p are siblings, so auto-placement would drop the paragraph into
+   the number column. Pin all real children to the content column. */
+.principles > li > * { grid-column: 2; }
+.principles h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.principles p {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  /* ~65 characters. The ch unit measures the "0" glyph, which in Geist is
+     wider than the average letter, so 50ch lands near 65 actual chars. */
+  max-width: 50ch;
+  text-wrap: pretty;
+}
 
 /* ============================================================
    Legal / registry data
@@ -568,7 +592,9 @@ h1 {
 @media (max-width: 880px) {
   .section-grid { grid-template-columns: 1fr; gap: 24px; }
   .section-rail { position: static; }
-  .indexed { grid-template-columns: 1fr; }
+  .principles > li { grid-template-columns: 1fr; row-gap: 6px; }
+  .principles > li::before { grid-column: 1; padding-top: 0; }
+  .principles > li > * { grid-column: 1; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   .footer-mark-block { grid-column: 1 / -1; }
   .main-nav ul { gap: 1rem; }

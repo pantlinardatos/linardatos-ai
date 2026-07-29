@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://linardatosai.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://linardatosai.com/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://linardatosai.com/el/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://linardatosai.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://linardatosai.com/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://linardatosai.com/about.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://linardatosai.com/el/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://linardatosai.com/about.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://linardatosai.com/el/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://linardatosai.com/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://linardatosai.com/el/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://linardatosai.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://linardatosai.com/el/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://linardatosai.com/about.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://linardatosai.com/el/about.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://linardatosai.com/about.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://linardatosai.com/el/legal.html</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://linardatosai.com/el/legal.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

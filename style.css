@@ -121,28 +121,6 @@ html, body {
 body { min-height: 100dvh; display: flex; flex-direction: column; }
 main { flex: 1; }
 
-/* Skip link — first tab stop, revealed on focus */
-.skip-link {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translate(-50%, -120%);
-  z-index: 200;
-  padding: 0.65rem 1.1rem;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-  transition: transform var(--dur-base) var(--ease-standard);
-}
-.skip-link:focus-visible {
-  transform: translate(-50%, 0);
-  box-shadow: none;
-}
-
 a {
   text-decoration: none;
   color: inherit;
@@ -425,25 +403,49 @@ h1 {
 .content-block p:last-child { margin-bottom: 0; }
 .content-block strong { color: var(--ink); font-weight: 500; }
 
-/* Indexed cards (01 / 02 / 03) */
-.indexed {
+/* Numbered principles — full-width rows separated by hairlines.
+   Three narrow cards gave a 25-character measure; rows let the copy
+   run at a readable width and absorb uneven paragraph lengths. */
+.principles { list-style: none; counter-reset: principle; }
+.principles > li {
+  counter-increment: principle;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  border-radius: 10px;
-  overflow: hidden;
+  grid-template-columns: 3.5rem 1fr;
+  column-gap: 24px;
+  padding: 30px 0;
+  border-top: 1px solid var(--border);
 }
-.indexed .item { background: var(--paper); padding: 28px 26px 32px; display: flex; flex-direction: column; gap: 10px; }
-.indexed .num {
+.principles > li:first-child { border-top: 0; padding-top: 4px; }
+.principles > li:last-child { padding-bottom: 4px; }
+.principles > li::before {
+  content: counter(principle, decimal-leading-zero);
+  grid-column: 1;
+  grid-row: 1;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--ink-subtle);
   letter-spacing: 0.08em;
+  padding-top: 0.45em;
 }
-.indexed h3 { font-size: 1.125rem; font-weight: 500; color: var(--ink); letter-spacing: -0.02em; }
-.indexed p { font-size: 0.9375rem; color: var(--ink-soft); line-height: 1.6; }
+/* h3 and p are siblings, so auto-placement would drop the paragraph into
+   the number column. Pin all real children to the content column. */
+.principles > li > * { grid-column: 2; }
+.principles h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.principles p {
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  /* ~65 characters. The ch unit measures the "0" glyph, which in Geist is
+     wider than the average letter, so 50ch lands near 65 actual chars. */
+  max-width: 50ch;
+  text-wrap: pretty;
+}
 
 /* ============================================================
    Legal / registry data
@@ -472,23 +474,39 @@ h1 {
 .data-table th,
 .data-table td {
   text-align: left;
-  padding: 12px 16px;
+  padding: 11px 18px;
   border-bottom: 1px solid var(--border);
-  vertical-align: top;
+  vertical-align: baseline;
   line-height: 1.5;
 }
 .data-table tr:last-child th,
 .data-table tr:last-child td { border-bottom: 0; }
-.data-table th {
-  font-weight: 500;
+
+/* Row headers: label column. Narrow, wrapping, hairline rule — no fill.
+   nowrap here would size the column to the single longest label and
+   leave that one label crammed against the divider. */
+.data-table tbody th {
+  font-weight: 400;
   color: var(--ink-mute);
   font-size: 0.82rem;
-  white-space: nowrap;
-  width: 34%;
-  background: var(--paper-deep);
+  width: 30%;
+  padding-right: 32px;
   border-right: 1px solid var(--border);
 }
+
+/* Column headers: the partners table */
+.data-table thead th {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ink-mute);
+  border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap;
+}
 .data-table td { color: var(--ink); }
+.data-table tbody td { padding-left: 24px; }
 .data-table td.numeric { font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: -0.01em; }
 
 .legal-note {
@@ -499,26 +517,10 @@ h1 {
   max-width: 60ch;
 }
 
-/* Registry screenshot kept as supporting evidence below the data */
-.legal-shot { max-width: 820px; margin: 0; }
-.legal-shot img {
-  display: block;
-  max-width: 100%; height: auto;
-  border-radius: 8px;
-  border: 1px solid var(--border-strong);
-}
-.legal-shot figcaption {
-  margin-top: 10px;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink-subtle);
-}
-
 @media (max-width: 560px) {
-  .data-table th { width: auto; white-space: normal; }
-  .data-table th, .data-table td { padding: 10px 12px; font-size: 0.84rem; }
+  .data-table tbody th { width: 38%; padding-right: 16px; }
+  .data-table th, .data-table td { padding: 10px 13px; font-size: 0.84rem; }
+  .data-table tbody td { padding-left: 16px; }
 }
 
 /* ============================================================
@@ -590,7 +592,9 @@ h1 {
 @media (max-width: 880px) {
   .section-grid { grid-template-columns: 1fr; gap: 24px; }
   .section-rail { position: static; }
-  .indexed { grid-template-columns: 1fr; }
+  .principles > li { grid-template-columns: 1fr; row-gap: 6px; }
+  .principles > li::before { grid-column: 1; padding-top: 0; }
+  .principles > li > * { grid-column: 1; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   .footer-mark-block { grid-column: 1 / -1; }
   .main-nav ul { gap: 1rem; }

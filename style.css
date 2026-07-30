@@ -372,6 +372,35 @@ h1 {
   font-weight: 400;
 }
 .bio-lead { max-width: 680px; }
+
+/* External profile links — same idiom as .hero-plaque-secondary */
+.profile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+  margin-top: var(--space-5);
+}
+.profile-links a {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: color var(--dur-base) var(--ease-standard),
+              border-color var(--dur-base) var(--ease-standard);
+}
+.profile-links a:hover { color: var(--ink); border-bottom-color: var(--border-strong); }
+
+.bio-lead a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule-strong);
+  transition: color var(--dur-base) var(--ease-standard),
+              border-color var(--dur-base) var(--ease-standard);
+}
+.bio-lead a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 .bio-blocks {
   margin-top: var(--space-7);
   display: grid;

@@ -594,6 +594,9 @@ h1 {
 /* h3 and p are siblings, so auto-placement would drop the paragraph into
    the number column. Pin all real children to the content column. */
 .principles > li > * { grid-column: 2; }
+/* h2 on the expertise page (top-level sections under its h1), h3 on the
+   home page (nested under the section h2). Same visual rank either way. */
+.principles h2,
 .principles h3 {
   font-size: 1.125rem;
   font-weight: 500;
@@ -601,6 +604,13 @@ h1 {
   letter-spacing: -0.02em;
   margin-bottom: 8px;
 }
+/* Unnumbered variant — areas of work are a set, not a sequence, so the
+   counter would imply an order that isn't there. Everything else about
+   the row rhythm is shared. */
+.principles--plain > li { grid-template-columns: minmax(0, 1fr); }
+.principles--plain > li::before { content: none; }
+.principles--plain > li > * { grid-column: 1; }
+
 .principles p {
   font-size: 0.9375rem;
   color: var(--ink-soft);
@@ -791,4 +801,7 @@ h1 {
 @media (max-width: 400px) {
   :root { --container-pad: 1.25rem; }
   .main-nav ul { gap: 0.5rem 0.85rem; }
+  /* The nav wraps here, which strands the language switch on its own line
+     with a leading divider that no longer divides anything. */
+  .lang-switch { border-left: 0; padding-left: 0; }
 }

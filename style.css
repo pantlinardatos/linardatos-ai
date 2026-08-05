@@ -45,6 +45,70 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* Greek, served under the same family names so it is picked per-character.
+   Geist ships no Greek, so Greek text previously fell back to whatever
+   system UI face the OS chose — visibly different letterforms sitting
+   inside the same line as Latin words like "Linardatos AI". Inter is the
+   closest widely-available pairing: same neo-grotesque construction, same
+   tall x-height, also SIL OFL. Latin still renders in Geist; only the
+   Greek codepoints resolve here. */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/inter-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/inter-greek-ext.woff2') format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* Greek monospace is JetBrains Mono, not Inter — Inter is proportional,
+   so aliasing it under a Mono family made every Greek label (ΔΙΔΑΚΤΟΡΙΚΟ,
+   ΠΩΣ ΔΟΥΛΕΥΟΥΜΕ, the table column heads) render proportional while its
+   Latin siblings stayed monospaced. */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/jbmono-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+
+/* True italics. .text-accent — the one accent treatment, used in every h1
+   — is italic, so without these the signature move of the design was a
+   browser-slanted faux oblique in both scripts. */
+@font-face {
+  font-family: 'Geist';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/geist-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/geist-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Geist';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/inter-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+
 :root {
   /* ===== Color — Ink / Paper ===== */
   --paper:        #F7F6F2;  /* warm off-white — page */
@@ -289,7 +353,21 @@ h1 {
   min-width: 0;
   overflow-wrap: anywhere;
 }
+/* Arrows are drawn, not typed. U+2192 and U+2190 fall outside every
+   unicode-range declared above, so as text they rendered from whatever
+   face the OS substituted — different weight and baseline per platform.
+   As SVG they inherit currentColor and scale with font-size. */
+.arrow {
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  display: inline-block;
+  vertical-align: -0.125em;
+}
+.arrow--left { transform: scaleX(-1); }
+
 .hero-plaque-arrow {
+  display: inline-flex;
   flex: 0 0 auto;
   color: var(--ink-mute);
   transition: color var(--dur-base) var(--ease-standard), transform var(--dur-base) var(--ease-standard);
@@ -373,34 +451,91 @@ h1 {
 }
 .bio-lead { max-width: 680px; }
 
-/* External profile links — same idiom as .hero-plaque-secondary */
-.profile-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px 28px;
-  margin-top: var(--space-5);
+/* ============================================================
+   Colophon — the founder's verifiable record.
+
+   Replaces an earlier .profile-links strip that left two links
+   orphaned under a paragraph which had already closed its thought.
+   Here they are the final row of a credit record: same register and
+   same link treatment as the rows above, so they cannot read as
+   leftovers.
+
+   Geometry follows .principles — a mono label track, content in the
+   1fr track, hairlines and leading doing all the holding-together.
+   No fills, no boxes, no new visual language.
+
+   Deliberately prints no citation figure. The count moves monthly, so
+   magnitude is stated in words that stay true and the live number sits
+   behind the Google Scholar link, where it cannot go stale.
+
+   No accent colour here on purpose: the page's single ink-blue belongs
+   to the h1, and a second focal point in the same viewport both
+   dilutes the headline and turns a checkable record into a boast.
+   ============================================================ */
+
+.colophon {
+  max-width: 680px;              /* same measure as .bio-lead */
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
 }
-.profile-links a {
+.colophon-caption {
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-mute);
   font-weight: 500;
-  border-bottom: 1px solid transparent;
-  padding-bottom: 2px;
-  transition: color var(--dur-base) var(--ease-standard),
-              border-color var(--dur-base) var(--ease-standard);
+  margin-bottom: 1.25rem;
 }
-.profile-links a:hover { color: var(--ink); border-bottom-color: var(--border-strong); }
+.colophon-list {
+  display: grid;
+  /* Fixed label track sized for the longest label in either locale
+     (ΔΗΜΟΣΙΕΥΣΕΙΣ is the widest). minmax(0, …) on both tracks means no
+     long word can push the page sideways. */
+  grid-template-columns: minmax(0, 7.5rem) minmax(0, 1fr);
+  column-gap: 28px;
+  row-gap: 16px;
+  align-items: baseline;
+}
+.colophon-list dt {
+  grid-column: 1;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  /* --ink-mute, not --ink-subtle: these labels are the keys of the
+     record, not ornament. Matches every other load-bearing mono label. */
+  color: var(--ink-mute);
+  line-height: 1.6;
+}
+.colophon-list dd {
+  grid-column: 2;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.colophon-profiles { display: flex; flex-wrap: wrap; gap: 6px 24px; }
 
-.bio-lead a {
+/* One underline mechanism for prose links across the whole page. */
+.bio-lead a,
+.colophon-list dd a {
   color: var(--ink);
   border-bottom: 1px solid var(--rule-strong);
   transition: color var(--dur-base) var(--ease-standard),
               border-color var(--dur-base) var(--ease-standard);
 }
-.bio-lead a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.bio-lead a:hover,
+.colophon-list dd a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+@media (max-width: 560px) {
+  .colophon-list { grid-template-columns: minmax(0, 1fr); row-gap: 4px; }
+  .colophon-list dt { grid-column: 1; margin-top: 14px; }
+  .colophon-list dt:first-of-type { margin-top: 0; }
+  .colophon-list dd { grid-column: 1; }
+}
 .bio-blocks {
   margin-top: var(--space-7);
   display: grid;
@@ -459,6 +594,9 @@ h1 {
 /* h3 and p are siblings, so auto-placement would drop the paragraph into
    the number column. Pin all real children to the content column. */
 .principles > li > * { grid-column: 2; }
+/* h2 on the expertise page (top-level sections under its h1), h3 on the
+   home page (nested under the section h2). Same visual rank either way. */
+.principles h2,
 .principles h3 {
   font-size: 1.125rem;
   font-weight: 500;
@@ -466,6 +604,13 @@ h1 {
   letter-spacing: -0.02em;
   margin-bottom: 8px;
 }
+/* Unnumbered variant — areas of work are a set, not a sequence, so the
+   counter would imply an order that isn't there. Everything else about
+   the row rhythm is shared. */
+.principles--plain > li { grid-template-columns: minmax(0, 1fr); }
+.principles--plain > li::before { content: none; }
+.principles--plain > li > * { grid-column: 1; }
+
 .principles p {
   font-size: 0.9375rem;
   color: var(--ink-soft);
@@ -656,4 +801,7 @@ h1 {
 @media (max-width: 400px) {
   :root { --container-pad: 1.25rem; }
   .main-nav ul { gap: 0.5rem 0.85rem; }
+  /* The nav wraps here, which strands the language switch on its own line
+     with a leading divider that no longer divides anything. */
+  .lang-switch { border-left: 0; padding-left: 0; }
 }

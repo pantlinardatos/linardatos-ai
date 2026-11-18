@@ -39,6 +39,12 @@
   </url>
 
   <url>
+    <loc>https://linardatosai.com/el/parastatika.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://linardatosai.com/el/legal.html</loc>
     <xhtml:link rel="alternate" hreflang="el" href="https://linardatosai.com/el/legal.html"/>
     <changefreq>yearly</changefreq>
